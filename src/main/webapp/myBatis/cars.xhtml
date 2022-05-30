@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Cars in stock in #{carsForDealer.dealer.name} dealer:</h2>
+    <ol>
+        <ui:repeat value="#{carsForDealers.dealer.cars}" var="car">
+            <li>#{car.make} - #{car.model}</li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText a:placeholder="make" value="#{carsForDealer.carToCreate.make}" required="true" />
+        <h:inputText a:placeholder="model" value="#{carsForDealer.carToCreate.model}" required="true" />
+        <h:inputText a:placeholder="price" value="#{carsForDealer.carToCreate.price}" required="true" /> (MSRP)
+        <h:commandButton value="Add car to the dealer" action="#{carsForDealer.createCar}" >
+            <f:param name="dealerId" value="#{carsForDealer.dealer.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="/myBatis/dealers" value="Back to dealers page"/>
+</h:body>
+</html>

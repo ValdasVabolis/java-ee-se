@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Cars in #{carsForDealer.dealer.name} dealer:</h2>
+    <ol>
+        <ui:repeat value="#{carsForDealer.dealer.cars}" var="car">
+            <li>
+                <h:link value="#{car.make} #{car.model}" outcome="carDetails?carId=#{car.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText a:placeholder="make" value="#{carsForDealer.carToCreate.make}" required="true" />
+        <h:inputText a:placeholder="model" value="#{carsForDealer.carToCreate.model}" required="true" />
+        <h:inputText a:placeholder="price" value="#{carsForDealer.carToCreate.price}" required="true" /> (MSRP)
+
+        <h:commandButton value="Add car to the dealer"
+                         actionListener="#{carsForDealer.createCar}"
+                         action="#{'cars?faces-redirect=true&amp;dealerId='.concat(carsForDealer.dealer.id)}">
+                <f:param name="dealerId" value="#{carsForDealer.dealer.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="index" value="Back to dealers page"/>
+</h:body>
+</html>

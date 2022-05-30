@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+<h:head/>
+<h:body>
+    <h2>#{updateCarDetails.car.make} - #{updateCarDetails.car.model}</h2>
+    <h4>MSRP: #{updateCarDetails.car.price}</h4>
+    <h:form>
+        <div><h:outputText value="Update leasing price (Eur/mo.): "/></div>
+        <h:inputText a:placeholder="enter the value" value="#{updateCarDetails.car.leasingPrice}" required="true" />
+        <h:commandButton value="update" action="#{updateCarDetails.updateCarLeasing}">
+            <f:param name="carId" value="#{updateCarDetails.car.id}" />
+        </h:commandButton>
+        <h:outputText value="Value was already modified by other user. If you want to override it - try again" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
+    </h:form>
+    <h:form>
+        <div>
+            <h:outputText value="#{generateCarLeasing.getLeasingPriceGenerationStatus()}" />
+        </div>
+        <h:outputText value="Deposit: "/>
+        <h:inputText a:placeholder="enter the value" binding="#{input1}" required="true" />
+        <h:outputText value="Leasing term: "/>
+        <h:inputText a:placeholder="enter the value" binding="#{input2}" required="true" />
+        <h:commandButton value="Generate new leasing price?" disabled="#{generateCarLeasing.isLeasingPriceGenerationRunning()}" action="#{generateCarLeasing.generateNewLeasingPrice(updateCarDetails.car.price, input1.value, input2.value)}">
+            <f:param name="carId" value="#{updateCarDetails.car.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="index" value="Back to home page"/>
+</h:body>
+</html>
